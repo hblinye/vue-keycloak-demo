@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  web:
+    image: node:latest
+    ports: 
+      - 8081:8080
+    volumes:
+      - /rails/vue-keycloak-demo:/usr/src/app
+    command: /bin/bash
+    tty: true
+    restart: always
+    depends_on:
+      - keycloak
+    networks:
+      - nw
+
+  keycloak:
+    image: jboss/keycloak:latest
+    ports:
+      - 32768:8080
+    environment:
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      JAVA_HOME: /usr/lib/jvm/java
+      LANG: ja_JP.UTF-8
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: postgres
+      DB_ADDR: db
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+    networks:
+      nw:
+        aliases:
+          - keycloak
+  
+  db:
+    image: postgres:11.2-alpine
+    environment:
+      - POSTGRES_PASSWORD=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_DB=keycloak
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+    networks:
+      nw:
+        aliases:
+          - db
+  
+volumes:
+  pgdata:
+
+networks:
+  nw:
+    driver: bridge

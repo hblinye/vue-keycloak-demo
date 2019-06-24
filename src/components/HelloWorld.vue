@@ -8,6 +8,7 @@
     </p>
     <h3>Installed CLI Plugins</h3>
     <ul>
+      <li><button v-on:click="fetchInfoMethod">fetchInfo</button></li>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
     </ul>
@@ -33,8 +34,11 @@
 <script>
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
+  props: ['msg'],
+  methods: {
+    fetchInfoMethod() {
+      this.$store.dispatch('fetchInfo')
+    }
   }
 }
 </script>
