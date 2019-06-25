@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { keycloak } from '../main';
 
 export class RestApi {
 
@@ -9,7 +10,7 @@ export class RestApi {
     list() {
         const options = {
             headers: {
-                'AUTHORIZATION': 'Bearer ' + localStorage.getItem('vue-refresh-token')
+                'AUTHORIZATION': 'Bearer ' + keycloak.token
             }
         }
         return axios.get(

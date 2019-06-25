@@ -24,13 +24,13 @@ keycloak.init({ onLoad: initOptions.onLoad }).success((auth) =>{
     } else {
       console.log("Authenticated");
     }
- 
+
     new Vue({
       store: store,
       render: h => h(App),
     }).$mount('#app')
   
-
+    
     localStorage.setItem("vue-token", keycloak.token);
     localStorage.setItem("vue-refresh-token", keycloak.refreshToken);
 
